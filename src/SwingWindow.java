@@ -57,16 +57,13 @@ public class SwingWindow {
 		lblNewLabel.setBounds(13, 105, 917, 430);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Out text");
-		btnNewButton.setBounds(13, 70, 89, 23);
-		frame.getContentPane().add(btnNewButton);
-		
 		textField = new JTextField();
 		textField.setBounds(13, 26, 250, 33);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("while");
+		rdbtnNewRadioButton.setSelected(true);
 		
 		buttonGroup.add(rdbtnNewRadioButton);
 		rdbtnNewRadioButton.setBounds(294, 31, 109, 23);
@@ -78,9 +75,13 @@ public class SwingWindow {
 		rdbtnNewRadioButton_1.setBounds(294, 57, 109, 23);
 		frame.getContentPane().add(rdbtnNewRadioButton_1);
 		
-		JButton btnNewButton_1 = new JButton("Set as pattern size");
-		btnNewButton_1.setBounds(112, 71, 148, 23);
+		JButton btnNewButton_1 = new JButton("Show pattern");
+		btnNewButton_1.setBounds(62, 70, 148, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Enter pattern size");
+		lblNewLabel_1.setBounds(13, 11, 250, 14);
+		frame.getContentPane().add(lblNewLabel_1);
 		
 
 
@@ -88,103 +89,92 @@ public class SwingWindow {
 				{
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						N = Integer.parseInt(textField.getText());
-						textField.setText("");
+						if(textField.getText().length() > 0) {
+							N = Integer.parseInt(textField.getText());
+							textField.setText("");
+						}
+						String message = new String();
+						message += "<html>";	
+						int i = 0;		
+				
+						if(textField.getText().length() <= 0) {			
+							if (rdbtnNewRadioButton.isSelected()) {
+								 while (i < N) { //
+									int x = 0;
+									while (x < i * 2) {
+										message += "&ensp;";
+										x++;
+									}
+									
+									int j = 1;
+									while (j <= N - i) {
+										message += j + "&ensp;";
+										j++;
+									}
+									message += "<br>";
+									i++;
+								}
+								
+								int j = 1;
+								while (j < N) {
+									int x = 0;
+									while (x < (N - 1) * 2) {
+										message += "&ensp;";
+										x++;
+									}
+									x = j + 1;
+						
+									while (x >= 1) {
+										message += x + "&ensp;";
+										x--;
+									}
+									
+									message += "<br>";
+									j++;
+								} 
+							} else if (rdbtnNewRadioButton_1.isSelected()) {
+								 do {		
+									int x = 0;
+									do {
+										if (x < i * 2) {
+											message += "&ensp;";
+											x++;
+										}
+									} while (x < i * 2);
+									
+									
+									int j = 1;
+									do {
+										message += j + "&ensp;";
+										j++;
+									} while (j <= N - i);
+									message += "<br>";
+									i++;
+								} while (i < N);
+								
+								
+								int j = 1;
+								do {
+									int x = 0;		
+									do {
+										message += "&ensp;";
+										x++;
+									} while (x < (N - 1) * 2);
+									
+									
+									x = j + 1;
+									do {
+										message += x + "&ensp;";
+										x--;
+									} while (x >= 1);						
+									message += "<br>";
+									j++;
+								} while (j < N);
+						}
+						message += "</html>";					
+						lblNewLabel.setText(message);
+						}
 					}	
 				});
-		
-		btnNewButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-		
-				String message = new String();
-				message += "<html>";	
-
-				int i = 0;		
-
-		
-				if(textField.getText().length() <= 0) {			
-					if (rdbtnNewRadioButton.isSelected()) {
-						 while (i < N) { //
-							int x = 0;
-							while (x < i * 2) {
-								message += "&ensp;";
-								x++;
-							}
-							
-							int j = 1;
-							while (j <= N - i) {
-								message += j + "&ensp;";
-								j++;
-							}
-							message += "<br>";
-							i++;
-						}
-						
-						int j = 1;
-						while (j < N) {
-							int x = 0;
-							while (x < (N - 1) * 2) {
-								message += "&ensp;";
-								x++;
-							}
-							x = j + 1;
-				
-							while (x >= 1) {
-								message += x + "&ensp;";
-								x--;
-							}
-							
-							message += "<br>";
-							j++;
-						} 
-					} else if (rdbtnNewRadioButton_1.isSelected()) {
-						 do {		
-							int x = 0;
-							do {
-								if (x < i * 2) {
-									message += "&ensp;";
-									x++;
-								}
-							} while (x < i * 2);
-							
-							
-							int j = 1;
-							do {
-								message += j + "&ensp;";
-								j++;
-							} while (j <= N - i);
-							message += "<br>";
-							i++;
-						} while (i < N);
-						
-						
-						int j = 1;
-						do {
-							int x = 0;		
-							do {
-								message += "&ensp;";
-								x++;
-							} while (x < (N - 1) * 2);
-							
-							
-							x = j + 1;
-							do {
-								message += x + "&ensp;";
-								x--;
-							} while (x >= 1);						
-							message += "<br>";
-							j++;
-						} while (j < N);
-				}
-				message += "</html>";					
-				lblNewLabel.setText(message);
-				}else {
-					lblNewLabel.setText(textField.getText());
-					textField.setText("");
-				}
-			}
-		});
 	}
 }
